@@ -1,30 +1,40 @@
 #pragma once
 
 #include <string>
+#include <ostream>
 #include "../utils/Constants.h"
 
 using namespace std;
 
 class Order {
 private:
-    uint32_t _orderId;
+    string _orderId;
+    char _msgType;
     string _symbol;
     uint32_t _side;
-    int32_t _price;
-    uint32_t _volume;
+    uint32_t _price;
+    uint32_t _quantity;
+    uint32_t _cumQuantity;
     OrderType _orderType;
     TimeInForce _tif;
 
 public:
+    Order() {}
 
-    Order () {};
+    Order(const string &orderId, const string &symbol, uint32_t side, uint32_t price, uint32_t quantity,
+          OrderType orderType, TimeInForce tif);
 
-    Order(uint32_t orderId, const string &symbol, uint32_t side, int32_t price, uint32_t volume, OrderType orderType,
-          TimeInForce tif);
+    bool operator==(const Order&);
 
-    uint32_t getOrderId() const;
+    char getMsgType() const;
 
-    void setOrderId(uint32_t orderId);
+    void setMsgType(char msgType);
+
+    void setPrice(uint32_t price);
+
+    void setOrderId(const string &orderId);
+
+    const string &getOrderId() const;
 
     const string &getSymbol() const;
 
@@ -34,13 +44,15 @@ public:
 
     void setSide(uint32_t side);
 
-    int32_t getPrice() const;
+    uint32_t getPrice() const;
 
-    void setPrice(int32_t price);
+    uint32_t getQuantity() const;
 
-    uint32_t getVolume() const;
+    void setQuantity(uint32_t quantity);
 
-    void setVolume(uint32_t volume);
+    uint32_t getCumQuantity() const;
+
+    void setCumQuantity(uint32_t cumQuantity);
 
     OrderType getOrderType() const;
 

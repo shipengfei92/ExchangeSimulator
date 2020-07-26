@@ -1,17 +1,29 @@
 #pragma once
 
-#include <cstdint>
+#include <string>
+#include <map>
+#include <boost/assign/list_of.hpp>
+using namespace std;
 
-enum class FixTags: uint8_t
-{
-    MsgType = 35,
-    OrderType = 40,
-    Price = 44,
-    Quantity = 38,
-    Side = 54,
-    TimeInForce = 59,
-    ExecType = 150,
-};
+// Side
+static constexpr uint32_t BUY = 1;
+static constexpr uint32_t SELL = 2;
+
+// MsgType
+static constexpr char New = 'D';
+static constexpr char Cancel = 'F';
+
+// Price multiplier
+static constexpr uint32_t MULTIPLIER = 100;
+
+// FIX tag
+static constexpr uint32_t MsgType = 35;
+static constexpr uint32_t Symbol = 55;
+static constexpr uint32_t Price = 44;
+static constexpr uint32_t Quantity = 38;
+static constexpr uint32_t Side = 54;
+static constexpr uint32_t OrderTypeTag = 40;
+static constexpr uint32_t TimeInForceTag = 59;
 
 enum class TimeInForce : uint8_t
 {
@@ -20,8 +32,17 @@ enum class TimeInForce : uint8_t
     FOK = 4, // fill or kill
 };
 
+static map<string, TimeInForce> TimeInForceMap = boost::assign::map_list_of
+        ("0",TimeInForce::GTC)
+        ("3",TimeInForce::IOC)
+        ("4",TimeInForce::FOK);
+
 enum class OrderType : uint8_t
 {
     Market = 1,
     Limit = 2,
 };
+
+static map<string, OrderType> OrderTypeMap = boost::assign::map_list_of
+        ("1",OrderType::Market)
+        ("2",OrderType::Limit);

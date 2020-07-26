@@ -11,17 +11,14 @@ find_package(Boost COMPONENTS log log_setup thread filesystem system unit_test_f
 
 add_executable(ExchangeSimulator main.cpp
         ${model_dir}
-        ${service_dir}
         ${utils_dir}
+        ${service_dir}
         )
 
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
-        ${Boost_DATE_TIME_LIBRARY}
         ${Boost_LOG_SETUP_LIBRARY}
         ${Boost_LOG_LIBRARY}
-        ${Boost_FILESYSTEM_LIBRARY}
-        ${Boost_THREAD_LIBRARY}
         ${Boost_SYSTEM_LIBRARY}
         )
 

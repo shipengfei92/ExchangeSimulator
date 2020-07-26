@@ -1,11 +1,22 @@
 #include "Order.h"
 
-uint32_t Order::getOrderId() const {
-    return _orderId;
+Order::Order(const string &orderId, const string &symbol, uint32_t side, uint32_t price, uint32_t quantity,
+             OrderType orderType, TimeInForce tif) :
+                                                                           _orderId(orderId),
+                                                                           _symbol(symbol),
+                                                                           _side(side),
+                                                                           _price(price),
+                                                                           _quantity(quantity),
+                                                                           _cumQuantity(0),
+                                                                           _orderType(orderType),
+                                                                           _tif(tif) {}
+
+bool Order::operator==(const Order &r) {
+    return r._orderId == this->_orderId;
 }
 
-void Order::setOrderId(uint32_t orderId) {
-    _orderId = orderId;
+const string &Order::getOrderId() const {
+    return _orderId;
 }
 
 const string &Order::getSymbol() const {
@@ -24,20 +35,24 @@ void Order::setSide(uint32_t side) {
     _side = side;
 }
 
-int32_t Order::getPrice() const {
+uint32_t Order::getPrice() const {
     return _price;
 }
 
-void Order::setPrice(int32_t price) {
-    _price = price;
+uint32_t Order::getQuantity() const {
+    return _quantity;
 }
 
-uint32_t Order::getVolume() const {
-    return _volume;
+void Order::setQuantity(uint32_t quantity) {
+    _quantity = quantity;
 }
 
-void Order::setVolume(uint32_t volume) {
-    _volume = volume;
+uint32_t Order::getCumQuantity() const {
+    return _cumQuantity;
+}
+
+void Order::setCumQuantity(uint32_t cumQuantity) {
+    _cumQuantity = cumQuantity;
 }
 
 OrderType Order::getOrderType() const {
@@ -56,7 +71,18 @@ void Order::setTif(TimeInForce tif) {
     _tif = tif;
 }
 
-Order::Order(uint32_t orderId, const string &symbol, uint32_t side, int32_t price, uint32_t volume, OrderType orderType,
-             TimeInForce tif) : _orderId(orderId), _symbol(symbol), _side(side), _price(price), _volume(volume),
-                                _orderType(orderType), _tif(tif) {}
+char Order::getMsgType() const {
+    return _msgType;
+}
 
+void Order::setMsgType(char msgType) {
+    _msgType = msgType;
+}
+
+void Order::setPrice(uint32_t price) {
+    _price = price;
+}
+
+void Order::setOrderId(const string &orderId) {
+    _orderId = orderId;
+}

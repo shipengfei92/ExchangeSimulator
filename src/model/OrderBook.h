@@ -2,9 +2,14 @@
 
 #include "PriceLevel.h"
 
+#include <vector>
 #include <map>
+#include <iostream>
+#include <boost/log/trivial.hpp>
 
-typedef std::map<int, PriceLevel*, std::less<int>> PriceLevels;
+using namespace std;
+
+typedef map<uint32_t , PriceLevel*> PriceLevels;
 
 class OrderBook {
 private:
@@ -18,6 +23,9 @@ private:
 
 public:
     OrderBook() {}
+    void executeOrder(Order* order);
+    void executeLimitOrder(Order* order);
+    void executeMarketOrder(Order* order);
 
     PriceLevel& getPriceLevel(uint32_t side, uint32_t price);
 
