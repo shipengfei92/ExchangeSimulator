@@ -24,7 +24,5 @@ public:
 
     void printQuotations();
     void printQuotations(const string& symbol);
-    uint32_t getBestBid(const string& symbol);
-    uint32_t getBestAsk(const string& symbol);
 
 };

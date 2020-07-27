@@ -25,41 +25,41 @@ namespace Utils {
     static Order* orderParser(const string& orderStr){
         vector<string> split_string;
         boost::split(split_string, orderStr, boost::is_any_of("=|;"));
-        printVector(split_string);
         Order* order = new Order();
         try {
             for (uint32_t i = 0; i< split_string.size(); i = i + 2) {
                 uint32_t fixTag = stoi(split_string[i]);
                 string value = split_string[i+1];
                 switch (fixTag) {
-                    case 8:
+                    case FixVersion:
                         break;
-                    case 11:
+                    case OrderId:
                         order->setOrderId(value);
                         break;
-                    case 35:
+                    case MsgType:
                         if(likely(value[0] == New)) {
                             order->setMsgType(New);
                         } else {
                             order->setMsgType(Cancel);
                         }
                         break;
-                    case 44:
+                    case Price:
                         order->setPrice(round(stod(value) * MULTIPLIER));
+                        order->setCumQuantity(0);
                         break;
-                    case 55:
+                    case Symbol:
                         order->setSymbol(value);
                         break;
-                    case 38:
+                    case Quantity:
                         order->setQuantity(stoi(value));
                         break;
-                    case 54:
+                    case Side:
                         order->setSide(stoi(value));
                         break;
-                    case 40:
+                    case OrderTypeTag:
                         order->setOrderType(OrderTypeMap[value]);
                         break;
-                    case 59:
+                    case TimeInForceTag:
                         order->setTif(TimeInForceMap[value]);
                         break;
                     default:

@@ -39,7 +39,7 @@ void ExecutionService::processLimitGTCOrder(Order *order) {
 }
 
 void ExecutionService::processLimitFOKOrder(Order *order) {
-    _orderBookService->executeLimitGTCOrder(order);
+    _orderBookService->executeLimitFOKOrder(order);
 }
 
 void ExecutionService::processLimitIOCOrder(Order *order) {

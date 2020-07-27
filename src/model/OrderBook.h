@@ -9,7 +9,7 @@
 
 using namespace std;
 
-typedef map<uint32_t , PriceLevel*> PriceLevels;
+typedef map<uint32_t , PriceLevel*, less<uint32_t>> PriceLevels;
 
 class OrderBook {
 private:
@@ -23,13 +23,14 @@ private:
 
 public:
     OrderBook() {}
-    void executeOrder(Order* order);
-    void executeLimitOrder(Order* order);
-    void executeMarketOrder(Order* order);
 
     PriceLevel& getPriceLevel(uint32_t side, uint32_t price);
+    PriceLevel& getBestPriceLevel(uint32_t side);
 
     const PriceLevels& getBuyPriceLevels() const { return _buy; }
     const PriceLevels& getSellPriceLevels() const { return _sell; }
+
+    void clearOrderBook();
+    void removePriceLevel(uint32_t side, uint32_t price);
 
 };

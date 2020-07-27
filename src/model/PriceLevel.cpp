@@ -11,23 +11,31 @@ void PriceLevel::addOrder(Order *order) {
 void PriceLevel::removeOrder(Order *order) {
     auto it = find(_orderList.begin(), _orderList.end(), order);
     if(it != _orderList.end()) {
-        _orderList.remove(*it);
+        _orderList.erase(it);
         _quantity -= ((*it)->getQuantity() - (*it)->getCumQuantity());
     }
 }
 
 void PriceLevel::executeOrder(Order *order) {
-    auto remainQuantity = order->getQuantity() - order->getCumQuantity();
+    auto cumQuantity = order->getCumQuantity();
+    auto remainQuantity = order->getQuantity() - cumQuantity;
     auto it = _orderList.begin();
-    while(remainQuantity > 0) {
+    while(remainQuantity > 0 && it!= _orderList.end()) {
         auto quantity = (*it)->getQuantity() - (*it)->getCumQuantity();
         if (quantity > remainQuantity) {
             (*it)->setCumQuantity((*it)->getCumQuantity() + remainQuantity);
+            cumQuantity += remainQuantity;
+            _quantity -= remainQuantity;
             remainQuantity = 0;
         } else {
-            removeOrder(*it);
+            _orderList.erase(it);
+            _quantity -= quantity;
+            cumQuantity += quantity;
+            remainQuantity -= quantity;
+            ++it;
         }
     }
+    order->setCumQuantity(cumQuantity);
 }
 
 uint32_t PriceLevel::getQuantity() const {

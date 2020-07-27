@@ -2,7 +2,6 @@
 
 #include <map>
 #include <boost/log/trivial.hpp>
-
 #include "../model/OrderBook.h"
 
 using namespace std;
@@ -22,8 +21,9 @@ public:
         return orderBookService;
     }
 
-    OrderBook* getOrderBook(const string& symbol);
+    void clearOrderBooks();
 
+    OrderBook* getOrderBook(const string& symbol);
     map<string,OrderBook*> getAllOrderBook() { return _orderBookMap; }
 
     void executeMarketOrder(Order *order);

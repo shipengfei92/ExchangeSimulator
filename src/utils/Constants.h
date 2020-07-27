@@ -17,6 +17,8 @@ static constexpr char Cancel = 'F';
 static constexpr uint32_t MULTIPLIER = 100;
 
 // FIX tag
+static constexpr uint32_t FixVersion = 8;
+static constexpr uint32_t OrderId = 11;
 static constexpr uint32_t MsgType = 35;
 static constexpr uint32_t Symbol = 55;
 static constexpr uint32_t Price = 44;

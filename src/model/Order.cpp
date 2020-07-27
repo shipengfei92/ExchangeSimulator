@@ -7,7 +7,6 @@ Order::Order(const string &orderId, const string &symbol, uint32_t side, uint32_
                                                                            _side(side),
                                                                            _price(price),
                                                                            _quantity(quantity),
-                                                                           _cumQuantity(0),
                                                                            _orderType(orderType),
                                                                            _tif(tif) {}
 

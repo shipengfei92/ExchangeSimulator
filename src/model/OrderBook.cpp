@@ -1,43 +1,27 @@
-//
-// Created by 时鹏飞 on 2020/7/25.
-//
-
 #include "OrderBook.h"
 
-PriceLevel &OrderBook::getPriceLevel(uint32_t side_, uint32_t price_) {
-    auto& book = side_ == BUY ? _buy: _sell;
-    auto it = book.find(price_);
+PriceLevel &OrderBook::getPriceLevel(uint32_t side, uint32_t price) {
+    auto& book = side == BUY ? _buy: _sell;
+    auto it = book.find(price);
     if (it == book.end()) {
-        it = book.insert(PriceLevels::value_type(price_, new PriceLevel(side_, price_))).first;
+        it = book.insert(PriceLevels::value_type(price, new PriceLevel(side, price))).first;
     }
     return *it->second;
 }
 
-void OrderBook::executeOrder(Order *order) {
-
+PriceLevel &OrderBook::getBestPriceLevel(uint32_t side) {
+    return side == BUY ? *_buy.rbegin()->second : *_sell.begin()->second;
 }
 
-void OrderBook::executeLimitOrder(Order *order) {
-    auto price = order->getPrice();
-    switch(order->getSide()) {
-        case BUY:
-            if(_sell.empty() || _sell.begin()->first > price) {
-                auto& priceLevel = getPriceLevel(BUY,price);
-                priceLevel.addOrder(order);
-            } else {
-
-            }
-            break;
-        case SELL:
-            if(_buy.empty() || _buy.rbegin()->first < price) {
-                auto priceLevel = getPriceLevel(SELL,price);
-                priceLevel.addOrder(order);
-            } else {
-
-            }
-
-            break;
-        default:
-            BOOST_LOG_TRIVIAL(error) << "unsupported side." << endl;
+void OrderBook::removePriceLevel(uint32_t side, uint32_t price) {
+    auto& book = side == BUY ? _buy: _sell;
+    auto it = book.find(price);
+    if (it != book.end()) {
+        book.erase(it);
     }
+}
+
+void OrderBook::clearOrderBook() {
+    _buy.clear();
+    _sell.clear();
 }
